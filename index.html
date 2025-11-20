@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>goodbye donghwan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 폰트 적용 -->
+<style>
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Galmuri11', sans-serif;
+    background: #f8f3eb;
+    margin: 0;
+    padding: 0;
+    color: #3e3e3e;
+    text-align: center;
+}
+
+header {
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+}
+
+.music-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 120px;
+    opacity: 0.9;
+}
+
+.hero-image {
+    width: 80%;
+    max-width: 480px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background-color: #ddd;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.section {
+    margin: 30px auto;
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+input, textarea {
+    font-family: 'Galmuri11', sans-serif;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid #dcd6ce;
+    background: #faf7f2;
+}
+
+button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #7f6a50;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #614f3a;
+}
+
+.msg-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e6e0d7;
+    text-align: left;
+}
+
+.msg-nick {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <!-- 자동재생 유튜브 BGM 영역 -->
+    <iframe class="music-box"
+        src="https://www.youtube.com/embed/유튜브ID?autoplay=1&loop=1&playlist=유튜브ID"
+        frameborder="0"
+        allow="autoplay">
+    </iframe>
+
+    <!-- 대표 이미지 공간 -->
+    <div class="hero-image">
+        대표 이미지 영역
+    </div>
+</header>
+
+<!-- 방명록 입력창 -->
+<div class="section">
+    <h2>방명록 작성하기</h2>
+    <input id="nickname" placeholder="닉네임">
+    <textarea id="comment" rows="4" placeholder="메시지를 입력하세요"></textarea>
+    <button onclick="saveMessage()">등록하기</button>
+</div>
+
+<!-- 메시지 목록 -->
+<div class="section">
+    <h2>모두의 메시지</h2>
+    <div id="messageList"></div>
+</div>
+
+<!-- Firebase 스크립트 (나중에 연결) -->
+<script>
+function saveMessage() {
+    alert("Firebase 연결 후 메시지가 저장됩니다!");
+}
+</script>
+
+</body>
+</html>
 

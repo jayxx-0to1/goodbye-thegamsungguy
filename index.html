@@ -86,19 +86,14 @@ header {
 /* ------------------------------ */
 .hero-image {
     width: 100%;
-    background-color: #ddd;
     border-radius: 14px;
+    background-image: url('이미지URL넣기'); 
+    background-size: cover;        /* 이미지 꽉 채우기 */
+    background-position: center;   /* 중앙 정렬 */
+    background-repeat: no-repeat;
     position: relative;
-    padding-bottom: 56.25%;   /* 🔥 16:9 비율 유지 */
+    padding-bottom: 56.25%; /* 16:9 비율 유지 */
     margin: 50px auto 0 auto;
-}
-
-.hero-image div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
 }
 
 /* ------------------------------ */

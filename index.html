@@ -41,6 +41,26 @@ header {
     height: 50px;
     opacity: 0.8;
 }
+    
+/* 상단 우측 음악 + 문구 묶음 */
+.top-right-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 문구와 뮤직박스 간격 */
+}
+
+/* 문구 스타일 */
+.music-text {
+    font-family: 'Galmuri11', sans-serif;
+    font-size: 12px;
+    color: #5a4a3b;
+    opacity: 0.9;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
 
 /* 대표 이미지: 더 크고 중심 강조 */
 .hero-image {
@@ -119,18 +139,21 @@ button:hover {
 <body>
 
 <header>
-    <!-- 자동재생 유튜브 BGM -->
-    <iframe class="music-box"
-        src="https://www.youtube.com/embed/tarCvk403H4?autoplay=1&loop=1&playlist=tarCvk403H4"
-        frameborder="0"
-        allow="autoplay">
-    </iframe>
+    <div class="top-right-box">
+        <div class="music-text">🎵Today's BGM - 비행운 / 한동환</div>
 
-    <!-- 대표 이미지 -->
+        <iframe class="music-box"
+            src="https://www.youtube.com/embed/tarCvk403H4?autoplay=1&loop=1&playlist=tarCvk403H4"
+            frameborder="0"
+            allow="autoplay">
+        </iframe>
+    </div>
+
     <div class="hero-image">
         대표 이미지 영역
     </div>
 </header>
+
 
 <!-- 방명록 작성 -->
 <div class="section">

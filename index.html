@@ -215,10 +215,70 @@ button:hover {
 </div>
 
 <script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+<script>
+// Firebase 설정
+const firebaseConfig = {
+  apiKey: "AIzaSyAjMGp5dOAZ5ms8MGYD9C2XziV8YsoWjvU",
+  authDomain: "goodbye-dongwhan.firebaseapp.com",
+  databaseURL: "https://goodbye-dongwhan-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "goodbye-dongwhan",
+  storageBucket: "goodbye-dongwhan.firebasestorage.app",
+  messagingSenderId: "322370249896",
+  appId: "1:322370249896:web:a5da7e2095208f058f4e9d"
+};
+
+// Firebase 초기화
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// -------------------------------------------
+// 메시지 저장하기
+// -------------------------------------------
 function saveMessage() {
-    alert("Firebase 연결 후 메시지가 저장됩니다!");
+    const nick = document.getElementById("nickname").value.trim();
+    const msg  = document.getElementById("comment").value.trim();
+
+    if (!nick || !msg) {
+        alert("닉네임과 메시지를 모두 입력해주세요!");
+        return;
+    }
+
+    // DB에 저장
+    db.ref("messages").push({
+        nickname: nick,
+        message: msg,
+        time: Date.now()
+    });
+
+    // 입력창 초기화
+    document.getElementById("nickname").value = "";
+    document.getElementById("comment").value = "";
 }
+
+// -------------------------------------------
+// 실시간 메시지 불러오기
+// -------------------------------------------
+db.ref("messages").on("value", (snapshot) => {
+    const list = document.getElementById("messageList");
+    list.innerHTML = "";
+
+    snapshot.forEach((child) => {
+        const v = child.val();
+
+        list.innerHTML += `
+            <div class="msg-item">
+                <div class="msg-nick">${v.nickname}</div>
+                <div>${v.message}</div>
+            </div>
+        `;
+    });
+});
 </script>
+
 
 </body>
 </html>

@@ -23,24 +23,34 @@ body {
     padding: 0;
     color: #3e3e3e;
     text-align: center;
-    font-size: 10px; /* 전체 폰트 축소 */
+    font-size: 10px;
 }
 
+/* ------------------------------ */
+/* 콘텐츠 전체 폭 통일 */
+/* ------------------------------ */
+.content-wrapper {
+    width: 90%;
+    max-width: 780px;   /* 🔥 hero-image, 방명록, 메시지 박스 모두 동일 폭 */
+    margin: 0 auto;
+}
+
+/* ------------------------------ */
+/* 상단 음악 영역 */
+/* ------------------------------ */
 header {
     width: 100%;
     position: relative;
     padding: 25px 0 15px 0;
 }
 
-/* 유튜브 BGM */
 .music-box {
     width: 55px;
     height: 38px;
     opacity: 0.9;
     border-radius: 6px;
 }
-    
-/* 상단 우측 음악 + 문구 묶음 */
+
 .top-right-box {
     position: absolute;
     top: 15px;
@@ -50,7 +60,6 @@ header {
     gap: 8px;
 }
 
-/* 문구 스타일 */
 .music-text {
     font-family: 'Galmuri11', sans-serif;
     font-size: 12px;
@@ -58,39 +67,53 @@ header {
     opacity: 0.9;
     white-space: nowrap;
     position: relative;
-    top: 2px; 
+    top: 2px;
 }
 
-/* 대표 이미지: 더 크고 중심 강조 */
+/* ------------------------------ */
+/* 대표 이미지: 16:9 비율 적용 */
+/* ------------------------------ */
 .hero-image {
     width: 100%;
-    max-width: 640px;
-    margin: 0 auto;
-    border-radius: 14px;
     background-color: #ddd;
-    height: 480px; /* ★ 더 크게 조정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 14px;
+    position: relative;
+    padding-bottom: 56.25%;   /* 🔥 16:9 비율 유지 */
+    margin: 50px auto 0 auto;
+}
+
+.hero-image div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 12px;
 }
 
+/* ------------------------------ */
 /* 공통 카드 영역 */
+/* ------------------------------ */
 .section {
-    margin: 22px auto;
-    width: 70%;
-    max-width: 520px;
+    margin: 25px auto;
+    width: 100%;              /* 🔥 hero-image와 폭 통일 */
     background: white;
-    padding: 18px 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    padding: 22px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-/* 방명록 입력칸 축소 디자인 */
+/* ------------------------------ */
+/* 방명록 입력 폼 중앙 정렬 */
+/* ------------------------------ */
+.input-wrapper {
+    width: 80%;     /* 🔥 흰색 박스 내부에서 중앙 정렬 */
+    margin: 0 auto;
+}
+
 input, textarea {
     font-family: 'Galmuri11', sans-serif;
     width: 100%;
-    padding: 8px; /* ★ 작게 */
+    padding: 8px;
     margin-top: 6px;
     border-radius: 7px;
     border: 1px solid #dcd6ce;
@@ -99,11 +122,13 @@ input, textarea {
 }
 
 textarea {
-    height: 70px; /* ★ 더 작게 */
+    height: 70px;
     resize: vertical;
 }
 
-/* 버튼 디자인 */
+/* ------------------------------ */
+/* 버튼 */
+/* ------------------------------ */
 button {
     width: 100%;
     margin-top: 10px;
@@ -120,7 +145,9 @@ button:hover {
     background: #614f3a;
 }
 
-/* 방명록 메시지 */
+/* ------------------------------ */
+/* 메시지 표시 */
+/* ------------------------------ */
 .msg-item {
     padding: 10px 0;
     border-bottom: 1px solid #e6e0d7;
@@ -132,11 +159,13 @@ button:hover {
     font-weight: bold;
     margin-bottom: 3px;
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- 상단 음악 영역 -->
 <header>
     <div class="top-right-box">
         <div class="music-text">🎵Today's BGM - 비행운(Healing ver.)</div>
@@ -147,25 +176,33 @@ button:hover {
             allow="autoplay">
         </iframe>
     </div>
-
-    <div class="hero-image">
-        대표 이미지 영역
-    </div>
 </header>
 
+<!-- 콘텐츠 공통 래퍼 -->
+<div class="content-wrapper">
 
-<!-- 방명록 작성 -->
-<div class="section">
-    <h2 style="margin-top:0;">방명록 작성하기</h2>
-    <input id="nickname" placeholder="닉네임">
-    <textarea id="comment" placeholder="메시지를 입력하세요"></textarea>
-    <button onclick="saveMessage()">등록하기</button>
-</div>
+    <!-- 대표 이미지 -->
+    <div class="hero-image">
+        <div>대표 이미지 영역</div>
+    </div>
 
-<!-- 메시지 목록 -->
-<div class="section">
-    <h2 style="margin-top:0;">모두의 메시지</h2>
-    <div id="messageList"></div>
+    <!-- 방명록 작성 -->
+    <div class="section">
+        <h2 style="margin-top:0;">방명록 작성하기</h2>
+
+        <div class="input-wrapper">
+            <input id="nickname" placeholder="닉네임">
+            <textarea id="comment" placeholder="메시지를 입력하세요"></textarea>
+            <button onclick="saveMessage()">등록하기</button>
+        </div>
+    </div>
+
+    <!-- 메시지 목록 -->
+    <div class="section">
+        <h2 style="margin-top:0;">모두의 메시지</h2>
+        <div id="messageList"></div>
+    </div>
+
 </div>
 
 <script>

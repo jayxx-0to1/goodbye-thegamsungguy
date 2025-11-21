@@ -15,7 +15,8 @@
     font-weight: 700;
     font-display: swap;
 }
-    /* 🔒 공통 오버레이 */
+
+/* 🔒 공통 오버레이 (비번/슬라이드용) */
 .secret-overlay {
     position: fixed;
     top: 0;
@@ -79,7 +80,7 @@
 
 /* 🌸 슬라이드 모달 박스 */
 .secret-slider-box {
-    position: relative;  /* 🔥 반드시 필요 */
+    position: relative;
     background: white;
     width: 320px;
     padding: 22px;
@@ -89,7 +90,7 @@
     text-align: center;
 }
 
-/* 고래 배경층 */
+/* 🐳 고래 애니메이션 영역 */
 .whale-animation-area {
     position: absolute;
     top: 0;
@@ -99,10 +100,10 @@
     pointer-events: none;
     overflow: hidden;
     opacity: 0.25;
-    z-index: 2; /* 🔥 슬라이드 안 배경 */
+    z-index: 2;
 }
 
-/* 고래 아이콘 각각 */
+/* 개별 고래 아이콘 */
 .whale-icon {
     position: absolute;
     font-size: 20px;
@@ -115,11 +116,10 @@
 .whale3 { left: 75%; bottom: -30px; animation-delay: 4s; }
 
 @keyframes floatUp {
-    0% { transform: translateY(20px); opacity: 0.35; }
-    50% { opacity: 0.55; }
+    0%   { transform: translateY(20px);  opacity: 0.35; }
+    50%  {                        opacity: 0.55; }
     100% { transform: translateY(-160px); opacity: 0.25; }
 }
-
 
 .slider-top {
     display: flex;
@@ -172,47 +172,15 @@
     from { opacity: 0; transform: translateY(5px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-    /* 🐳 고래 애니메이션 영역 */
-.whale-animation-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* 클릭 안 가림 */
-    overflow: hidden;
-    opacity: 0.25; /* 연하게 */
-}
 
-/* 개별 고래 아이콘 */
-.whale-icon {
-    position: absolute;
-    font-size: 20px;
-    animation: floatUp 6s linear infinite;
-    opacity: 0.25;
-}
-
-/* 고래 시작 위치 */
-.whale1 { left: 20%; bottom: -20px; animation-delay: 0s; }
-.whale2 { left: 50%; bottom: -25px; animation-delay: 2s; }
-.whale3 { left: 75%; bottom: -30px; animation-delay: 4s; }
-
-/* 위로 천천히 떠오르는 애니메이션 */
-@keyframes floatUp {
-    0% { transform: translateY(20px); opacity: 0.15; }
-    50% { opacity: 0.3; }
-    100% { transform: translateY(-160px); opacity: 0; }
-}
-
-
-/* 팝업 전체 배경 */
+/* 첫 방문 안내 팝업 전체 배경 */
 .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 225, 235, 0.55); /* 연핑크 투명 오버레이 */
+    background: rgba(255, 225, 235, 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -223,7 +191,7 @@
     transition: opacity 0.4s ease;
 }
 
-/* 팝업 박스 */
+/* 안내 팝업 박스 */
 .popup-box {
     background: #fff7fa;
     padding: 22px 26px;
@@ -234,13 +202,11 @@
     animation: popupShow 0.4s ease;
 }
 
-/* 팝업 애니메이션 */
 @keyframes popupShow {
     from { transform: scale(0.88); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    to   { transform: scale(1);    opacity: 1; }
 }
 
-/* 팝업 제목 */
 .popup-title {
     font-size: 12px;
     color: #8a6d74;
@@ -248,7 +214,6 @@
     font-weight: bold;
 }
 
-/* 팝업 내용 */
 .popup-text {
     font-size: 10px;
     color: #8a6d74;
@@ -256,7 +221,6 @@
     margin-bottom: 14px;
 }
 
-/* 닫기 버튼 */
 .popup-close-btn {
     background: #d8a7b1;
     border: none;
@@ -271,7 +235,7 @@
     background: #c48f9b;
 }
 
-/* 모든 요소 박스 사이즈 통일 */
+/* 공통 박스 사이즈 */
 * {
     box-sizing: border-box;
 }
@@ -415,10 +379,7 @@ textarea {
     padding: 12px;
     border: none;
     border-radius: 8px;
-
-    /* 연핑크 그라데이션 */
     background: linear-gradient(90deg, #f8c8d8 0%, #f3b5c8 100%);
-
     color: white;
     font-size: 12px;
     cursor: pointer;
@@ -485,7 +446,7 @@ textarea {
 
 <body>
     
-<!-- 커스텀 팝업 -->
+<!-- 첫 방문 안내 팝업 -->
 <div id="welcomeOverlay" class="popup-overlay">
     <div class="popup-box">
         <div class="popup-title">🐹 꼭 읽어주세요! 🐹</div>
@@ -506,31 +467,28 @@ textarea {
 <header>
     <div class="top-right-box">
         <div class="music-text">🎵Today's BGM - 비행운(Healing ver.)</div>
-
-        <!-- 음악 재생/일시정지 버튼 -->
         <button id="musicToggleBtn" class="music-toggle">⏸</button>
     </div>
-
-    <!-- YouTube API Player -->
     <div id="player"></div>
 </header>
 
 <!-- 콘텐츠 공통 래퍼 -->
 <div class="content-wrapper">
 
-    <!-- 대표 이미지 -->
+    <!-- 대표 이미지 (이스터에그 트리거) -->
     <div class="hero-image"></div>
 
     <!-- 방명록 작성 -->
     <div class="section">
         <h2 style="margin-top:0;">일촌평 작성하기</h2>
-        <div class="sub-explain">동환군의 마지막이 행복할 수 있도록, 여러분의 추억을 담아 일촌평을 작성해주세요 🙏🏻</div>
+        <div class="sub-explain">
+            동환군의 마지막이 행복할 수 있도록, 여러분의 추억을 담아 일촌평을 작성해주세요 🙏🏻
+        </div>
 
         <div class="input-wrapper">
             <input id="nickname" placeholder="닉네임">
             <textarea id="comment" placeholder="메시지를 입력하세요"></textarea>
             <button class="submit-btn" onclick="saveMessage()">전달하기</button>
-
         </div>
     </div>
 
@@ -553,10 +511,10 @@ textarea {
 // Firebase 설정
 const firebaseConfig = {
   apiKey: "AIzaSyAjMGp5dOAZ5ms8MGYD9C2XziV8YsoWjvU",
-  authDomain: "goodbye-dongwhan.firebaseapp.com",
-  databaseURL: "https://goodbye-dongwhan-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "goodbye-dongwhan",
-  storageBucket: "goodbye-dongwhan.firebasestorage.app",
+  authDomain: "goodbye-donghwan.firebaseapp.com",
+  databaseURL: "https://goodbye-donghwan-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "goodbye-donghwan",
+  storageBucket: "goodbye-donghwan.firebasestorage.app",
   messagingSenderId: "322370249896",
   appId: "1:322370249896:web:a5da7e2095208f058f4e9d"
 };
@@ -564,9 +522,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// 유저 UID
+// 유저 UID (내가 쓴 글만 삭제용)
 if (!localStorage.getItem("guest_uid")) {
-    localStorage.setItem("guest_uid", "uid_" + Date.now() + "_" + Math.random().toString(36).substring(2, 9));
+    localStorage.setItem(
+        "guest_uid",
+        "uid_" + Date.now() + "_" + Math.random().toString(36).substring(2, 9)
+    );
 }
 const myUID = localStorage.getItem("guest_uid");
 
@@ -588,7 +549,7 @@ function adminLogin() {
 // 메시지 저장
 function saveMessage() {
     const nick = document.getElementById("nickname").value.trim();
-    const msg = document.getElementById("comment").value.trim();
+    const msg  = document.getElementById("comment").value.trim();
 
     if (!nick || !msg) {
         alert("닉네임과 메시지를 모두 입력해주세요!");
@@ -639,20 +600,17 @@ db.ref("messages").on("value", () => renderMessages());
 //
 // 🎧 YouTube Music Control (Iframe API)
 //
-
-// 1) YouTube API 로드
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
 
 let player;
 
-// 2) API Ready → Player 생성
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '1',
         width: '1',
-        videoId: 'tarCvk403H4',  // 영상 ID
+        videoId: 'tarCvk403H4',
         playerVars: {
             autoplay: 1,
             loop: 1,
@@ -664,21 +622,21 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// 3) 버튼 토글
 const toggleBtn = document.getElementById("musicToggleBtn");
 let isPlaying = true;
 
 toggleBtn.addEventListener("click", function () {
     if (isPlaying) {
         player.pauseVideo();
-        toggleBtn.textContent = "▶";  // 재생
+        toggleBtn.textContent = "▶";
     } else {
         player.playVideo();
-        toggleBtn.textContent = "⏸";  // 일시정지
+        toggleBtn.textContent = "⏸";
     }
     isPlaying = !isPlaying;
 });
-    // 첫 방문 팝업
+
+// 첫 방문 팝업
 window.addEventListener("load", () => {
     if (!localStorage.getItem("firstPopupShown")) {
         showPopup();
@@ -696,105 +654,12 @@ function showPopup() {
         localStorage.setItem("firstPopupShown", "yes");
     });
 }
-/* 🔐 비공개 메시지 비번 */
-const secretPassword = "4donghwan2";   // 🔥 관리자모드와 별개 비번 설정됨
 
-/* 🌸 메시지 배열 (고래님이 직접 수정) */
-const secretMessages = [
-    "Message 1",
-    "Message 2",
-    "Message 3",
-    "Message 4",
-    "Message 5"
-];
-
-let currentSlide = 0;
-
-/* 메인이미지 클릭 → 비번 팝업 오픈 */
-document.querySelector(".hero-image").addEventListener("click", () => {
-    document.getElementById("secretPwOverlay").style.display = "flex";
-});
-
-/* 비밀번호 확인 */
-function checkSecretPw() {
-    const pw = document.getElementById("secretPwInput").value;
-
-    if (pw === secretPassword) {
-        document.getElementById("secretPwOverlay").style.display = "none";
-        openSecretSlider();
-    } else {
-        alert("비밀번호가 일치하지 않습니다!");
-    }
-}
-
-/* 슬라이드 열기 */
-function openSecretSlider() {
-    document.getElementById("secretSliderOverlay").style.display = "flex";
-    document.getElementById("slideTotal").innerText = secretMessages.length;
-    updateSlide();
-}
-
-/* 슬라이드 닫기 */
-function closeSecretSlider() {
-    document.getElementById("secretSliderOverlay").style.display = "none";
-}
-
-/* 슬라이드 업데이트 */
-function updateSlide() {
-    document.getElementById("secretMessageBox").innerText = secretMessages[currentSlide];
-    document.getElementById("slideNow").innerText = currentSlide + 1;
-}
-
-/* 다음/이전 */
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % secretMessages.length;
-    updateSlide();
-}
-
-function prevSlide() {
-    currentSlide = (currentSlide - 1 + secretMessages.length) % secretMessages.length;
-    updateSlide();
-}
-
-</script>
-<!-- 🔐 비밀 메시지 비밀번호 입력 팝업 -->
-<div id="secretPwOverlay" class="secret-overlay">
-    <div class="secret-pw-box">
-        <div class="secret-title">🔐 비공개 메시지</div>
-        <div class="secret-text">비밀번호를 입력해주세요.</div>
-        <input id="secretPwInput" type="password" class="secret-input" placeholder="비밀번호 입력">
-        <button class="secret-pw-btn" onclick="checkSecretPw()">확인</button>
-    </div>
-</div>
-
-<!-- 🌸 비공개 메시지 슬라이드 모달 -->
-<div id="secretSliderOverlay" class="secret-overlay">
-    <div class="secret-slider-box">
-        <div class="whale-animation-area">
-    <div class="whale-icon whale1">🐳</div>
-    <div class="whale-icon whale2">🐳</div>
-    <div class="whale-icon whale3">🐳</div>
-</div>
-
-        <div class="slider-top">
-            <button class="slide-btn" onclick="prevSlide()">←</button>
-            <div class="slide-index"><span id="slideNow">1</span> / <span id="slideTotal">5</span></div>
-            <button class="slide-btn" onclick="nextSlide()">→</button>
-        </div>
-
-        <div id="secretMessageBox" class="secret-message">
-            Message 1
-        </div>
-        
-        <button class="secret-close-btn" onclick="closeSecretSlider()">닫기</button>
-    </div>
-</div>
-<script>
 // -------------------------
 // 🔐 비공개 메시지 관련
 // -------------------------
 
-const secretPassword = "4donghwan2";  
+const secretPassword = "4donghwan2";   // 관리자 모드와 별도 비번
 const secretMessages = [
     "Message 1",
     "Message 2",
@@ -834,13 +699,13 @@ function closeSecretSlider() {
     document.getElementById("secretSliderOverlay").style.display = "none";
 }
 
-// 슬라이드 업데이트
+// 슬라이드 내용 업데이트
 function updateSlide() {
     document.getElementById("secretMessageBox").innerText = secretMessages[currentSlide];
     document.getElementById("slideNow").innerText = currentSlide + 1;
 }
 
-// 이전 / 다음 버튼
+// 이전 / 다음
 function nextSlide() {
     currentSlide = (currentSlide + 1) % secretMessages.length;
     updateSlide();
@@ -851,40 +716,63 @@ function prevSlide() {
     updateSlide();
 }
 
-
-// -------------------------------------
-// 🖱 바깥 클릭하면 팝업 닫힘
-// -------------------------------------
-
-// 비번 팝업
+// 🖱 바깥 클릭 시 팝업 닫기
 document.getElementById("secretPwOverlay").addEventListener("click", function(e) {
-    if (e.target === this) { // 바깥 클릭
+    if (e.target === this) {
         this.style.display = "none";
     }
 });
 
-// 슬라이드 팝업
 document.getElementById("secretSliderOverlay").addEventListener("click", function(e) {
-    if (e.target === this) { // 바깥 클릭
+    if (e.target === this) {
         this.style.display = "none";
     }
 });
 
-
-// -------------------------------------
-// ⌨ ESC 누르면 닫힘 (둘 중 열린 팝업 닫힘)
-// -------------------------------------
+// ⌨ ESC 키로 팝업 닫기
 document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") {
-
-        const pwPopup = document.getElementById("secretPwOverlay");
+        const pwPopup     = document.getElementById("secretPwOverlay");
         const sliderPopup = document.getElementById("secretSliderOverlay");
 
-        if (pwPopup.style.display === "flex") pwPopup.style.display = "none";
+        if (pwPopup.style.display === "flex")     pwPopup.style.display = "none";
         if (sliderPopup.style.display === "flex") sliderPopup.style.display = "none";
     }
 });
 </script>
+
+<!-- 🔐 비밀 메시지 비밀번호 입력 팝업 -->
+<div id="secretPwOverlay" class="secret-overlay">
+    <div class="secret-pw-box">
+        <div class="secret-title">🔐 비공개 메시지</div>
+        <div class="secret-text">비밀번호를 입력해주세요.</div>
+        <input id="secretPwInput" type="password" class="secret-input" placeholder="비밀번호 입력">
+        <button class="secret-pw-btn" onclick="checkSecretPw()">확인</button>
+    </div>
+</div>
+
+<!-- 🌸 비공개 메시지 슬라이드 모달 -->
+<div id="secretSliderOverlay" class="secret-overlay">
+    <div class="secret-slider-box">
+        <div class="whale-animation-area">
+            <div class="whale-icon whale1">🐳</div>
+            <div class="whale-icon whale2">🐳</div>
+            <div class="whale-icon whale3">🐳</div>
+        </div>
+
+        <div class="slider-top">
+            <button class="slide-btn" onclick="prevSlide()">←</button>
+            <div class="slide-index"><span id="slideNow">1</span> / <span id="slideTotal">5</span></div>
+            <button class="slide-btn" onclick="nextSlide()">→</button>
+        </div>
+
+        <div id="secretMessageBox" class="secret-message">
+            Message 1
+        </div>
+        
+        <button class="secret-close-btn" onclick="closeSecretSlider()">닫기</button>
+    </div>
+</div>
 
 </body>
 </html>

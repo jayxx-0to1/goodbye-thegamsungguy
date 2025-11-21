@@ -247,7 +247,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// 메시지 저장하기
+// 메시지 저장
 function saveMessage() {
     const nick = document.getElementById("nickname").value.trim();
     const msg  = document.getElementById("comment").value.trim();
@@ -272,7 +272,7 @@ db.ref("messages").on("value", (snapshot) => {
     const list = document.getElementById("messageList");
     list.innerHTML = "";
 
-    snapshot.forEach((child) => {
+    snapshot.forEach(child => {
         const v = child.val();
 
         list.innerHTML += `

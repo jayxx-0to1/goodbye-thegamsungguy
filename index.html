@@ -15,6 +15,71 @@
     font-weight: 700;
     font-display: swap;
 }
+/* 팝업 전체 배경 */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 225, 235, 0.55); /* 연핑크 투명 오버레이 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+/* 팝업 박스 */
+.popup-box {
+    background: #fff7fa;
+    padding: 22px 26px;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(255, 155, 175, 0.25);
+    text-align: center;
+    width: 260px;
+    animation: popupShow 0.4s ease;
+}
+
+/* 팝업 애니메이션 */
+@keyframes popupShow {
+    from { transform: scale(0.88); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 팝업 제목 */
+.popup-title {
+    font-size: 12px;
+    color: #8a6d74;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* 팝업 내용 */
+.popup-text {
+    font-size: 10px;
+    color: #8a6d74;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+/* 닫기 버튼 */
+.popup-close-btn {
+    background: #d8a7b1;
+    border: none;
+    color: white;
+    padding: 7px 14px;
+    font-size: 11px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.popup-close-btn:hover {
+    background: #c48f9b;
+}
 
 /* 모든 요소 박스 사이즈 통일 */
 * {
@@ -204,6 +269,19 @@ textarea {
 </head>
 
 <body>
+    
+<!-- 커스텀 팝업 -->
+<div id="welcomeOverlay" class="popup-overlay">
+    <div class="popup-box">
+        <div class="popup-title">🐹 꼭 읽어주세요! 🐹</div>
+        <div class="popup-text">
+            이 페이지는 동환과장님을 위한 마지막 편지들을 모은 공간입니다.<br>
+            마음을 담아, 하지만 너무 슬프지 않게, 즐겁게 작성할 수 있도록 제작했어요🙂💗
+            단, 비밀 이벤트이므로 당사자에게 들키지 않도록 주의해주세요 🙏🏻🙏🏻🙏🏻
+        </div>
+        <button id="popupCloseBtn" class="popup-close-btn">확인</button>
+    </div>
+</div>
 
 <div class="copyright">
     Copyright. 2025. Team Whale All rights reserved.
@@ -384,6 +462,25 @@ toggleBtn.addEventListener("click", function () {
     }
     isPlaying = !isPlaying;
 });
+    // 첫 방문 팝업
+window.addEventListener("load", () => {
+    if (!localStorage.getItem("firstPopupShown")) {
+        showPopup();
+    }
+});
+
+function showPopup() {
+    const overlay = document.getElementById("welcomeOverlay");
+    overlay.style.opacity = "1";
+    overlay.style.pointerEvents = "auto";
+
+    document.getElementById("popupCloseBtn").addEventListener("click", () => {
+        overlay.style.opacity = "0";
+        overlay.style.pointerEvents = "none";
+        localStorage.setItem("firstPopupShown", "yes");
+    });
+}
+
 </script>
 
 </body>

@@ -16,7 +16,7 @@
     font-display: swap;
 }
 
-/* 모든 요소 패딩/보더를 폭 안에 포함 */
+/* 모든 요소 박스 사이즈 통일 */
 * {
     box-sizing: border-box;
 }
@@ -31,12 +31,10 @@ body {
     font-size: 10px;
 }
 
-/* ------------------------------ */
 /* 콘텐츠 전체 폭 통일 */
-/* ------------------------------ */
 .content-wrapper {
     width: 90%;
-    max-width: 780px;   /* hero-image, 방명록, 메시지 박스 모두 동일 폭 */
+    max-width: 780px;
     margin: 0 auto;
 }
 
@@ -50,9 +48,7 @@ body {
     opacity: 0.7;
 }
 
-/* ------------------------------ */
-/* 상단 음악 영역 */
-/* ------------------------------ */
+/* 상단 음악 */
 header {
     width: 100%;
     position: relative;
@@ -76,7 +72,6 @@ header {
 }
 
 .music-text {
-    font-family: 'Galmuri11', sans-serif;
     font-size: 12px;
     color: #5a4a3b;
     opacity: 0.9;
@@ -85,9 +80,7 @@ header {
     top: 2px;
 }
 
-/* ------------------------------ */
-/* 대표 이미지: 16:9 비율 적용 */
-/* ------------------------------ */
+/* 메인 이미지 */
 .hero-image {
     width: 100%;
     max-width: 780px;
@@ -97,26 +90,22 @@ header {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 비율 유지 */
+    padding-bottom: 56.25%;
     margin: 25px auto 0 auto;
 }
 
-/* ------------------------------ */
-/* 공통 카드 영역 */
-/* ------------------------------ */
+/* 공통 카드 */
 .section {
     margin: 25px auto;
     width: 100%;
-    max-width: 780px;        /* hero-image와 동일 */
+    max-width: 780px;
     background: white;
     padding: 22px 25px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-/* ------------------------------ */
-/* 방명록 입력 폼 중앙 정렬 */
-/* ------------------------------ */
+/* 입력 영역 */
 .input-wrapper {
     width: 80%;
     margin: 0 auto;
@@ -145,9 +134,7 @@ textarea {
     opacity: 0.8;
 }
 
-/* ------------------------------ */
 /* 버튼 */
-/* ------------------------------ */
 button {
     width: 100%;
     margin-top: 10px;
@@ -164,33 +151,50 @@ button:hover {
     background: #614f3a;
 }
 
-/* ------------------------------ */
-/* 메시지 표시 */
-/* ------------------------------ */
+/* 메시지 박스 */
 .msg-item {
     padding: 10px 0;
     border-bottom: 1px solid #e6e0d7;
     text-align: left;
     font-size: 11.5px;
+    position: relative;
 }
 
+/* 닉네임 */
 .msg-nick {
     font-weight: bold;
     margin-bottom: 3px;
+}
+
+/* 삭제 버튼(본인 메시지에만 표시) */
+.delete-btn {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    color: #555;
+    padding: 4px 6px;
+    font-size: 9px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #f2f2f2;
 }
 </style>
 </head>
 
 <body>
+
 <div class="copyright">
     Copyright. 2025. Team Whale All rights reserved.
 </div>
 
-<!-- 상단 음악 영역 -->
 <header>
     <div class="top-right-box">
         <div class="music-text">🎵Today's BGM - 비행운(Healing ver.)</div>
-
         <iframe class="music-box"
             src="https://www.youtube.com/embed/tarCvk403H4?autoplay=1&loop=1&playlist=tarCvk403H4"
             frameborder="0"
@@ -199,13 +203,10 @@ button:hover {
     </div>
 </header>
 
-<!-- 콘텐츠 공통 래퍼 -->
 <div class="content-wrapper">
 
-    <!-- 대표 이미지 -->
     <div class="hero-image"></div>
 
-    <!-- 방명록 작성 -->
     <div class="section">
         <h2 style="margin-top:0;">일촌평 작성하기</h2>
         <div class="sub-explain">
@@ -219,7 +220,6 @@ button:hover {
         </div>
     </div>
 
-    <!-- 메시지 목록 -->
     <div class="section">
         <h2 style="margin-top:0;">[일촌평] 이 도착했습니다 💌</h2>
         <div id="messageList"></div>
@@ -243,9 +243,14 @@ const firebaseConfig = {
   appId: "1:322370249896:web:a5da7e2095208f058f4e9d"
 };
 
-// Firebase 초기화
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+
+// 사용자 고유 UID (방문자마다 생성)
+if (!localStorage.getItem("guest_uid")) {
+    localStorage.setItem("guest_uid", "uid_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9));
+}
+const myUID = localStorage.getItem("guest_uid");
 
 // 메시지 저장
 function saveMessage() {
@@ -260,6 +265,7 @@ function saveMessage() {
     db.ref("messages").push({
         nickname: nick,
         message: msg,
+        uid: myUID,
         time: Date.now()
     });
 
@@ -267,7 +273,13 @@ function saveMessage() {
     document.getElementById("comment").value = "";
 }
 
-// 실시간 메시지 불러오기
+// 메시지 삭제
+function deleteMessage(key) {
+    if (!confirm("정말 삭제할까요?")) return;
+    db.ref("messages/" + key).remove();
+}
+
+// 메시지 불러오기
 db.ref("messages").on("value", (snapshot) => {
     const list = document.getElementById("messageList");
     list.innerHTML = "";
@@ -275,10 +287,13 @@ db.ref("messages").on("value", (snapshot) => {
     snapshot.forEach(child => {
         const v = child.val();
 
+        const isMine = (v.uid === myUID);
+
         list.innerHTML += `
             <div class="msg-item">
                 <div class="msg-nick">${v.nickname}</div>
                 <div>${v.message}</div>
+                ${isMine ? `<button class="delete-btn" onclick="deleteMessage('${child.key}')">삭제</button>` : ""}
             </div>
         `;
     });

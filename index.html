@@ -79,6 +79,7 @@
 
 /* 🌸 슬라이드 모달 박스 */
 .secret-slider-box {
+    position: relative;  /* 🔥 반드시 필요 */
     background: white;
     width: 320px;
     padding: 22px;
@@ -87,6 +88,38 @@
     animation: fadeIn 0.3s ease;
     text-align: center;
 }
+
+/* 고래 배경층 */
+.whale-animation-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.25;
+    z-index: 2; /* 🔥 슬라이드 안 배경 */
+}
+
+/* 고래 아이콘 각각 */
+.whale-icon {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.25;
+}
+
+.whale1 { left: 20%; bottom: -20px; animation-delay: 0s; }
+.whale2 { left: 50%; bottom: -25px; animation-delay: 2s; }
+.whale3 { left: 75%; bottom: -30px; animation-delay: 4s; }
+
+@keyframes floatUp {
+    0% { transform: translateY(20px); opacity: 0.15; }
+    50% { opacity: 0.3; }
+    100% { transform: translateY(-160px); opacity: 0; }
+}
+
 
 .slider-top {
     display: flex;

@@ -15,6 +15,163 @@
     font-weight: 700;
     font-display: swap;
 }
+    /* 🔒 공통 오버레이 */
+.secret-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 225, 235, 0.6);
+    backdrop-filter: blur(2px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+/* 🔐 비번 입력 박스 */
+.secret-pw-box {
+    background: #fff7fa;
+    padding: 25px;
+    width: 260px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(243, 145, 175, 0.3);
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.secret-title {
+    font-size: 13px;
+    color: #8a6d74;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.secret-text {
+    font-size: 10px;
+    color: #8a6d74;
+    margin-bottom: 12px;
+}
+
+.secret-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d8b8c4;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 10px;
+    background: #fffafc;
+}
+
+.secret-pw-btn {
+    width: 100%;
+    background: #d8a7b1;
+    border: none;
+    padding: 8px;
+    font-size: 11px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.secret-pw-btn:hover { background: #c5929e; }
+
+/* 🌸 슬라이드 모달 박스 */
+.secret-slider-box {
+    background: white;
+    width: 320px;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(243, 145, 175, 0.28);
+    animation: fadeIn 0.3s ease;
+    text-align: center;
+}
+
+.slider-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.slide-btn {
+    background: #f4d4df;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.slide-btn:hover { background: #e7bfd0; }
+
+.slide-index {
+    font-size: 11px;
+    color: #8a6d74;
+    font-weight: bold;
+}
+
+.secret-message {
+    margin-top: 14px;
+    margin-bottom: 18px;
+    font-size: 12px;
+    color: #6a555d;
+    min-height: 60px;
+    line-height: 1.5;
+}
+
+.secret-close-btn {
+    width: 100%;
+    background: #d8a7b1;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    color: white;
+    cursor: pointer;
+}
+
+.secret-close-btn:hover { background: #c5929e; }
+
+/* fade-in 효과 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+    /* 🐳 고래 애니메이션 영역 */
+.whale-animation-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 클릭 안 가림 */
+    overflow: hidden;
+    opacity: 0.25; /* 연하게 */
+}
+
+/* 개별 고래 아이콘 */
+.whale-icon {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.25;
+}
+
+/* 고래 시작 위치 */
+.whale1 { left: 20%; bottom: -20px; animation-delay: 0s; }
+.whale2 { left: 50%; bottom: -25px; animation-delay: 2s; }
+.whale3 { left: 75%; bottom: -30px; animation-delay: 4s; }
+
+/* 위로 천천히 떠오르는 애니메이션 */
+@keyframes floatUp {
+    0% { transform: translateY(20px); opacity: 0.15; }
+    50% { opacity: 0.3; }
+    100% { transform: translateY(-160px); opacity: 0; }
+}
+
+
 /* 팝업 전체 배경 */
 .popup-overlay {
     position: fixed;
@@ -506,8 +663,99 @@ function showPopup() {
         localStorage.setItem("firstPopupShown", "yes");
     });
 }
+/* 🔐 비공개 메시지 비번 */
+const secretPassword = "whaleproject2";   // 🔥 관리자모드와 별개 비번 설정됨
+
+/* 🌸 메시지 배열 (고래님이 직접 수정) */
+const secretMessages = [
+    "Message 1",
+    "Message 2",
+    "Message 3",
+    "Message 4",
+    "Message 5"
+];
+
+let currentSlide = 0;
+
+/* 메인이미지 클릭 → 비번 팝업 오픈 */
+document.querySelector(".hero-image").addEventListener("click", () => {
+    document.getElementById("secretPwOverlay").style.display = "flex";
+});
+
+/* 비밀번호 확인 */
+function checkSecretPw() {
+    const pw = document.getElementById("secretPwInput").value;
+
+    if (pw === secretPassword) {
+        document.getElementById("secretPwOverlay").style.display = "none";
+        openSecretSlider();
+    } else {
+        alert("비밀번호가 일치하지 않습니다!");
+    }
+}
+
+/* 슬라이드 열기 */
+function openSecretSlider() {
+    document.getElementById("secretSliderOverlay").style.display = "flex";
+    document.getElementById("slideTotal").innerText = secretMessages.length;
+    updateSlide();
+}
+
+/* 슬라이드 닫기 */
+function closeSecretSlider() {
+    document.getElementById("secretSliderOverlay").style.display = "none";
+}
+
+/* 슬라이드 업데이트 */
+function updateSlide() {
+    document.getElementById("secretMessageBox").innerText = secretMessages[currentSlide];
+    document.getElementById("slideNow").innerText = currentSlide + 1;
+}
+
+/* 다음/이전 */
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % secretMessages.length;
+    updateSlide();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + secretMessages.length) % secretMessages.length;
+    updateSlide();
+}
 
 </script>
+<!-- 🔐 비밀 메시지 비밀번호 입력 팝업 -->
+<div id="secretPwOverlay" class="secret-overlay">
+    <div class="secret-pw-box">
+        <div class="secret-title">🔐 비공개 메시지</div>
+        <div class="secret-text">비밀번호를 입력해주세요.</div>
+        <input id="secretPwInput" type="password" class="secret-input" placeholder="비밀번호 입력">
+        <button class="secret-pw-btn" onclick="checkSecretPw()">확인</button>
+    </div>
+</div>
+
+<!-- 🌸 비공개 메시지 슬라이드 모달 -->
+<div id="secretSliderOverlay" class="secret-overlay">
+    <div class="secret-slider-box">
+        <div class="whale-animation-area">
+    <div class="whale-icon whale1">🐳</div>
+    <div class="whale-icon whale2">🐳</div>
+    <div class="whale-icon whale3">🐳</div>
+</div>
+
+        <div class="slider-top">
+            <button class="slide-btn" onclick="prevSlide()">←</button>
+            <div class="slide-index"><span id="slideNow">1</span> / <span id="slideTotal">5</span></div>
+            <button class="slide-btn" onclick="nextSlide()">→</button>
+        </div>
+
+        <div id="secretMessageBox" class="secret-message">
+            Message 1
+        </div>
+
+        <button class="secret-close-btn" onclick="closeSecretSlider()">닫기</button>
+    </div>
+</div>
 
 </body>
 </html>

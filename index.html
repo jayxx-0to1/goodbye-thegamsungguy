@@ -31,14 +31,15 @@ body {
     font-size: 10px;
 }
 
-/* 콘텐츠 전체 폭 통일 */
+/* 콘텐츠 폭 통일 */
 .content-wrapper {
     width: 90%;
     max-width: 780px;
     margin: 0 auto;
 }
 
-.copyright {
+/* 상단 카피라이트 */
+copyright {
     width: 100%;
     text-align: center;
     font-size: 9px;
@@ -48,7 +49,7 @@ body {
     opacity: 0.7;
 }
 
-/* 상단 음악 */
+/* 상단 음악 영역 */
 header {
     width: 100%;
     position: relative;
@@ -80,7 +81,7 @@ header {
     top: 2px;
 }
 
-/* 메인 이미지 */
+/* 대표 이미지 */
 .hero-image {
     width: 100%;
     max-width: 780px;
@@ -134,7 +135,7 @@ textarea {
     opacity: 0.8;
 }
 
-/* 버튼 */
+/* 버튼 기본 */
 button {
     width: 100%;
     margin-top: 10px;
@@ -166,7 +167,7 @@ button:hover {
     margin-bottom: 3px;
 }
 
-/* 삭제 버튼(본인 메시지에만 표시) */
+/* 삭제 버튼 */
 .delete-btn {
     position: absolute;
     right: 0;
@@ -182,6 +183,20 @@ button:hover {
 
 .delete-btn:hover {
     background: #f2f2f2;
+}
+
+/* 관리자 모드 버튼 */
+.admin-btn {
+    margin: 25px auto;
+    font-size: 9px;
+    color: #6a5f54;
+    text-decoration: underline;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.admin-btn:hover {
+    opacity: 1;
 }
 </style>
 </head>
@@ -225,9 +240,12 @@ button:hover {
         <div id="messageList"></div>
     </div>
 
+    <!-- 관리자 모드 버튼 -->
+    <div class="admin-btn" onclick="adminLogin()">관리자 모드</div>
+
 </div>
 
-<!-- Firebase SDK -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
@@ -246,11 +264,27 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// 사용자 고유 UID (방문자마다 생성)
+// 유저 UID 저장
 if (!localStorage.getItem("guest_uid")) {
     localStorage.setItem("guest_uid", "uid_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9));
 }
 const myUID = localStorage.getItem("guest_uid");
+
+// 관리자 모드 여부
+let isAdmin = localStorage.getItem("isAdmin") === "true";
+
+// 관리자 로그인
+function adminLogin() {
+    const pw = prompt("관리자 비밀번호를 입력하세요:");
+    if (pw === "whaleproject") {
+        alert("관리자 모드가 활성화되었습니다.");
+        isAdmin = true;
+        localStorage.setItem("isAdmin", "true");
+        renderMessages();
+    } else {
+        alert("비밀번호가 올바르지 않습니다.");
+    }
+}
 
 // 메시지 저장
 function saveMessage() {
@@ -279,25 +313,31 @@ function deleteMessage(key) {
     db.ref("messages/" + key).remove();
 }
 
-// 메시지 불러오기
-db.ref("messages").on("value", (snapshot) => {
-    const list = document.getElementById("messageList");
-    list.innerHTML = "";
+// 메시지 렌더링
+function renderMessages() {
+    db.ref("messages").once("value", (snapshot) => {
+        const list = document.getElementById("messageList");
+        list.innerHTML = "";
 
-    snapshot.forEach(child => {
-        const v = child.val();
+        snapshot.forEach(child => {
+            const v = child.val();
+            const isMine = (v.uid === myUID);
+            const deletable = isMine || isAdmin;
 
-        const isMine = (v.uid === myUID);
-
-        list.innerHTML += `
-            <div class="msg-item">
-                <div class="msg-nick">${v.nickname}</div>
-                <div>${v.message}</div>
-                ${isMine ? `<button class="delete-btn" onclick="deleteMessage('${child.key}')">삭제</button>` : ""}
-            </div>
-        `;
+            list.innerHTML += `
+                <div class="msg-item">
+                    <div class="msg-nick">${v.nickname}</div>
+                    <div>${v.message}</div>
+                    ${ deletable ? `<button class="delete-btn" onclick="deleteMessage('${child.key}')">삭제</button>` : "" }
+                </div>
+            `;
+        });
     });
-});
+}
+
+// 실시간 업데이트
+db.ref("messages").on("value", () => renderMessages());
+
 </script>
 
 </body>

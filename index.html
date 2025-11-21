@@ -785,18 +785,106 @@ function prevSlide() {
         <div id="secretMessageBox" class="secret-message">
             Message 1
         </div>
-
+        
         <button class="secret-close-btn" onclick="closeSecretSlider()">닫기</button>
     </div>
-    // 🔐 비밀번호 팝업 외부 클릭하면 닫기
+</div>
+<script>
+// -------------------------
+// 🔐 비공개 메시지 관련
+// -------------------------
+
+const secretPassword = "4donghwan2";  
+const secretMessages = [
+    "Message 1",
+    "Message 2",
+    "Message 3",
+    "Message 4",
+    "Message 5"
+];
+
+let currentSlide = 0;
+
+// 메인이미지 클릭 → 비번 팝업
+document.querySelector(".hero-image").addEventListener("click", () => {
+    document.getElementById("secretPwOverlay").style.display = "flex";
+});
+
+// 비밀번호 확인
+function checkSecretPw() {
+    const pw = document.getElementById("secretPwInput").value;
+
+    if (pw === secretPassword) {
+        document.getElementById("secretPwOverlay").style.display = "none";
+        openSecretSlider();
+    } else {
+        alert("비밀번호가 일치하지 않습니다!");
+    }
+}
+
+// 슬라이드 모달 열기
+function openSecretSlider() {
+    document.getElementById("secretSliderOverlay").style.display = "flex";
+    document.getElementById("slideTotal").innerText = secretMessages.length;
+    updateSlide();
+}
+
+// 슬라이드 닫기
+function closeSecretSlider() {
+    document.getElementById("secretSliderOverlay").style.display = "none";
+}
+
+// 슬라이드 업데이트
+function updateSlide() {
+    document.getElementById("secretMessageBox").innerText = secretMessages[currentSlide];
+    document.getElementById("slideNow").innerText = currentSlide + 1;
+}
+
+// 이전 / 다음 버튼
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % secretMessages.length;
+    updateSlide();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + secretMessages.length) % secretMessages.length;
+    updateSlide();
+}
+
+
+// -------------------------------------
+// 🖱 바깥 클릭하면 팝업 닫힘
+// -------------------------------------
+
+// 비번 팝업
 document.getElementById("secretPwOverlay").addEventListener("click", function(e) {
-    // 클릭한 곳이 overlay(바깥)인지 확인
-    if (e.target === this) {
+    if (e.target === this) { // 바깥 클릭
         this.style.display = "none";
     }
 });
 
-</div>
+// 슬라이드 팝업
+document.getElementById("secretSliderOverlay").addEventListener("click", function(e) {
+    if (e.target === this) { // 바깥 클릭
+        this.style.display = "none";
+    }
+});
+
+
+// -------------------------------------
+// ⌨ ESC 누르면 닫힘 (둘 중 열린 팝업 닫힘)
+// -------------------------------------
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+
+        const pwPopup = document.getElementById("secretPwOverlay");
+        const sliderPopup = document.getElementById("secretSliderOverlay");
+
+        if (pwPopup.style.display === "flex") pwPopup.style.display = "none";
+        if (sliderPopup.style.display === "flex") sliderPopup.style.display = "none";
+    }
+});
+</script>
 
 </body>
 </html>

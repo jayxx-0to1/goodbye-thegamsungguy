@@ -788,6 +788,14 @@ function prevSlide() {
 
         <button class="secret-close-btn" onclick="closeSecretSlider()">닫기</button>
     </div>
+    // 🔐 비밀번호 팝업 외부 클릭하면 닫기
+document.getElementById("secretPwOverlay").addEventListener("click", function(e) {
+    // 클릭한 곳이 overlay(바깥)인지 확인
+    if (e.target === this) {
+        this.style.display = "none";
+    }
+});
+
 </div>
 
 </body>

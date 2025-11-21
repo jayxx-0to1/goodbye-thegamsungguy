@@ -639,9 +639,7 @@ toggleBtn.addEventListener("click", function () {
 
 // 첫 방문 팝업
 window.addEventListener("load", () => {
-    if (!localStorage.getItem("firstPopupShown")) {
-        showPopup();
-    }
+    showPopup();  // 항상 팝업 등장
 });
 
 function showPopup() {
@@ -652,9 +650,9 @@ function showPopup() {
     document.getElementById("popupCloseBtn").addEventListener("click", () => {
         overlay.style.opacity = "0";
         overlay.style.pointerEvents = "none";
-        localStorage.setItem("firstPopupShown", "yes");
     });
 }
+
 
 // -------------------------
 // 🔐 비공개 메시지 관련

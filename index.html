@@ -217,6 +217,31 @@ textarea {
     margin-bottom: 10px;
     opacity: 0.9;
 }
+    
+/* 전달하기 버튼 */
+.submit-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+
+    /* 연핑크 그라데이션 */
+    background: linear-gradient(90deg, #f8c8d8 0%, #f3b5c8 100%);
+
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Galmuri11', sans-serif;
+    box-shadow: 0 3px 6px rgba(243, 145, 175, 0.25);
+    transition: 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(90deg, #f3b5c8 0%, #eaa2bb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(243, 145, 175, 0.35);
+}
 
 /* 메시지 박스 */
 .msg-item {
@@ -314,7 +339,8 @@ textarea {
         <div class="input-wrapper">
             <input id="nickname" placeholder="닉네임">
             <textarea id="comment" placeholder="메시지를 입력하세요"></textarea>
-            <button onclick="saveMessage()">전달하기</button>
+            <button class="submit-btn" onclick="saveMessage()">전달하기</button>
+
         </div>
     </div>
 

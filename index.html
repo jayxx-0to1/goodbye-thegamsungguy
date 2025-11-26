@@ -632,13 +632,13 @@ function saveMessage() {
     }
 
     db.ref("messages").push({
-        nickname: nick,
-        message: msg,
-        uid: myUID,
-        time: Date.now()
-        locked: false,
+    nickname: nick,
+    message: msg,
+    uid: myUID,
+    time: Date.now(),
+    locked: false
+});
 
-    });
 
     document.getElementById("nickname").value = "";
     document.getElementById("comment").value = "";
@@ -671,19 +671,21 @@ function renderMessages() {
             const deletable = isMine || isAdmin;
 
             list.innerHTML += `
-                <div class="msg-item">
-                    <div class="msg-nick">${v.nickname}</div>
-                    <div>${v.message}</div>
-                    ${deletable ? `<button class="delete-btn" onclick="deleteMessage('${child.key}')">삭제</button>` : ""}
-                    ${isAdmin ? `
-    <button class="lock-btn" onclick="toggleLock('${child.key}', ${v.locked})">
-        ${v.locked ? "🔓 해제" : "🔒 잠금"}
-    </button>
-` : ""}
-<div>${v.locked && !isAdmin ? "🔒 비밀글입니다" : v.message}</div>
+  <div class="msg-item">
+    <div class="msg-nick">${v.nickname}</div>
 
+    <div class="msg-content">
+        ${v.locked && !isAdmin ? "🔒 비밀글입니다" : v.message}
+    </div>
 
-                </div>
+    ${deletable ? `<button class="delete-btn" onclick="deleteMessage('${child.key}')">삭제</button>` : ""}
+    ${isAdmin ? `
+        <button class="lock-btn" onclick="toggleLock('${child.key}', ${v.locked})">
+            ${v.locked ? "🔓 해제" : "🔒 잠금"}
+        </button>
+    ` : ""}
+</div>
+
             `;
         });
     });

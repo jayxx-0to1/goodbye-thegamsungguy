@@ -636,6 +636,8 @@ function saveMessage() {
         message: msg,
         uid: myUID,
         time: Date.now()
+        locked: false,
+
     });
 
     document.getElementById("nickname").value = "";
@@ -648,6 +650,11 @@ function saveMessage() {
 function deleteMessage(key) {
     if (!confirm("삭제하시겠습니까?")) return;
     db.ref("messages/" + key).remove();
+}
+function toggleLock(key, currentState) {
+    db.ref("messages/" + key).update({
+        locked: !currentState
+    });
 }
 
 // ---------------------------
@@ -668,6 +675,14 @@ function renderMessages() {
                     <div class="msg-nick">${v.nickname}</div>
                     <div>${v.message}</div>
                     ${deletable ? `<button class="delete-btn" onclick="deleteMessage('${child.key}')">삭제</button>` : ""}
+                    ${isAdmin ? `
+    <button class="lock-btn" onclick="toggleLock('${child.key}', ${v.locked})">
+        ${v.locked ? "🔓 해제" : "🔒 잠금"}
+    </button>
+` : ""}
+<div>${v.locked && !isAdmin ? "🔒 비밀글입니다" : v.message}</div>
+
+
                 </div>
             `;
         });

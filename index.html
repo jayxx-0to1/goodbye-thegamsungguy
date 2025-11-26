@@ -449,6 +449,63 @@ textarea {
     transform: translateY(-1px);
     box-shadow: 0 5px 10px rgba(243, 145, 175, 0.35);
 }
+/* 🎀 슬라이더 상단 버튼 & 인덱스 정렬 */
+.slider-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+/* ⬅️➡️ 양쪽 화살표 버튼 */
+.slide-btn-arrow {
+    background: #f8c8d8;
+    border: 1px solid #e8b9c5;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(243, 145, 175, 0.25);
+    transition: 0.2s ease;
+}
+
+.slide-btn-arrow:hover {
+    background: #f3b5c8;
+    transform: translateY(-1px);
+}
+
+/* 🔢 슬라이드 숫자 표시 */
+.slide-index {
+    font-size: 12px;
+    font-weight: bold;
+    color: #8a6d74;
+}
+
+/* 📦 비밀 슬라이드 박스 전체 스타일 통일 */
+.secret-slider-box {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(255,150,170,0.2);
+    width: 320px;
+    text-align: center;
+}
+
+/* 슬라이드 이미지 */
+.secret-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* 캡션 */
+.secret-caption {
+    font-size: 11px;
+    color: #8a6d74;
+    margin-top: 6px;
+}
 
 </style>
 </head>
@@ -788,19 +845,14 @@ document.addEventListener("keydown", function(e) {
 <div id="secretSliderOverlay" class="secret-overlay">
     <div class="secret-slider-box">
 
-        <!-- 🐳 고래 애니메이션 -->
-        <div class="whale-animation-area">
-            <div class="whale-icon whale1">🐳</div>
-            <div class="whale-icon whale2">🐳</div>
-            <div class="whale-icon whale3">🐳</div>
-        </div>
-
+    
         <!-- 상단 네비 -->
         <div class="slider-top">
-            <button class="slide-btn" onclick="prevSlide()">←</button>
-            <div class="slide-index"><span id="slideNow">1</span> / <span id="slideTotal">5</span></div>
-            <button class="slide-btn" onclick="nextSlide()">→</button>
-        </div>
+    <button class="slide-btn-arrow" onclick="prevSlide()">←</button>
+    <div class="slide-index"><span id="slideNow">1</span> / <span id="slideTotal">5</span></div>
+    <button class="slide-btn-arrow" onclick="nextSlide()">→</button>
+</div>
+
 
         <!-- ⭐ 슬라이드 내용 -->
         <div id="secretMessageBox" class="secret-message">

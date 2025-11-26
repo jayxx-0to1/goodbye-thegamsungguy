@@ -100,7 +100,42 @@ body {
     background: #c48f9b;
 }
 
+/* 🌸 시크릿 메시지 슬라이드 박스 (가장 중요함) */
+.secret-slider-box {
+    position: relative;
+    background: #ffffff;               /* 하얀 박스 */
+    width: 320px;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(243, 145, 175, 0.28);
+    animation: fadeIn 0.3s ease;
+    text-align: center;
+    overflow: hidden;                  /* 고래 아이콘이 밖으로 안 튀게 */
+    z-index: 100000;                   /* 오버레이 위에 올라오도록 */
+}
 
+/* 시크릿 이미지 */
+.secret-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* 사진 아래 캡션 */
+.secret-caption {
+    font-size: 11px;
+    margin-top: 5px;
+    color: #6a555d;
+}
+
+/* 슬라이드 전체 감싸는 div */
+.secret-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    
 /* 상단 카피라이트 */
 .copyright {
     width: 100%;

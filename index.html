@@ -34,6 +34,22 @@ body {
     max-width: 780px;
     margin: 0 auto;
 }
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 225, 235, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    opacity: 0;              /* ✔ 기본은 0 */
+    pointer-events: none;    /* ✔ 클릭 안됨 */
+    transition: opacity 0.4s ease;
+}
 
 /* 상단 카피라이트 */
 .copyright {
@@ -234,8 +250,8 @@ textarea {
 <body>
 
 <!-- 첫 방문 안내 팝업 -->
-<div id="welcomeOverlay" class="popup-overlay">
-    <div class="popup-box">
+<div id="welcomeOverlay" class="-overlay">
+    <div class="-box">
         <div class="popup-title">🐹 꼭 읽어주세요! 🐹</div>
         <div class="popup-text">
             이 페이지는 동환과장님을 위한<br> 마지막 편지들을 모은 공간입니다.<br>

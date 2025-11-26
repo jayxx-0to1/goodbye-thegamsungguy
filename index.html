@@ -25,10 +25,11 @@
     height: 100%;
     background: rgba(255, 225, 235, 0.6);
     backdrop-filter: blur(2px);
-    display: none;
-    align-items: center;
     justify-content: center;
     z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* 🔐 비번 입력 박스 */
@@ -48,7 +49,20 @@
     margin-bottom: 8px;
     font-weight: bold;
 }
+    
+.secret-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
 
+.secret-caption {
+    font-size: 11px;
+    color: #8a6d74;
+    text-align: center;
+    line-height: 1.4;
+}
+        
 .secret-text {
     font-size: 10px;
     color: #8a6d74;
@@ -660,11 +674,38 @@ function showPopup() {
 
 const secretPassword = "4donghwan2";   // 관리자 모드와 별도 비번
 const secretMessages = [
-    "Message 1",
-    "Message 2",
-    "Message 3",
-    "Message 4",
-    "Message 5"
+    `
+    <div class="secret-slide">
+        <img src="YOUR_IMAGE_URL_1" class="secret-img">
+        <div class="secret-caption">이 사진에 대한 한마디 1</div>
+    </div>
+    `,
+    `
+    <div class="secret-slide">
+        <img src="YOUR_IMAGE_URL_2" class="secret-img">
+        <div class="secret-caption">한마디 2</div>
+    </div>
+    `,
+    `
+    <div class="secret-slide">
+        <img src="YOUR_IMAGE_URL_3" class="secret-img">
+        <div class="secret-caption">한마디 3</div>
+    </div>
+    `,
+    `
+    <div class="secret-slide">
+        <img src="YOUR_IMAGE_URL_4" class="secret-img">
+        <div class="secret-caption">한마디 4</div>
+    </div>
+    `,
+    `
+    <div class="secret-slide">
+        <img src="YOUR_IMAGE_URL_5" class="secret-img">
+        <div class="secret-caption">한마디 5</div>
+    </div>
+    `
+];
+
 ];
 
 let currentSlide = 0;
@@ -700,7 +741,7 @@ function closeSecretSlider() {
 
 // 슬라이드 내용 업데이트
 function updateSlide() {
-    document.getElementById("secretMessageBox").innerText = secretMessages[currentSlide];
+    document.getElementById("secretMessageBox").innerHTML = secretMessages[currentSlide];
     document.getElementById("slideNow").innerText = currentSlide + 1;
 }
 

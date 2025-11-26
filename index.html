@@ -329,6 +329,127 @@ textarea {
     justify-content: center;
     z-index: 99999;
 }
+    /* 🔐 비번 입력 박스 (화이트 박스 + 그림자 + 라운드) */
+.secret-pw-box {
+    background: #ffffff;
+    padding: 25px;
+    width: 260px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(255, 150, 170, 0.18);
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.secret-title {
+    font-size: 13px;
+    color: #7a5f66;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.secret-text {
+    font-size: 10px;
+    color: #9d7a83;
+    margin-bottom: 12px;
+}
+
+/* 입력 스타일 통일 */
+.secret-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e9c8d2;
+    border-radius: 7px;
+    font-size: 10px;
+    background: #fff7fa;
+    margin-bottom: 12px;
+}
+
+/* 연핑크 버튼 스타일 */
+.secret-pw-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f8c8d8 0%, #f3b5c8 100%);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(243, 145, 175, 0.25);
+    transition: 0.2s ease;
+}
+
+.secret-pw-btn:hover {
+    background: linear-gradient(90deg, #f3b5c8 0%, #eaa2bb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(243, 145, 175, 0.35);
+}
+/* 🌸 비공개 메시지 슬라이드 박스 */
+.secret-slider-box {
+    position: relative;
+    background: #ffffff;
+    width: 330px;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(255, 150, 170, 0.18);
+    animation: fadeIn 0.3s ease;
+    text-align: center;
+    overflow: hidden; /* 고래 아이콘 가리지 않음 */
+}
+/* 사진 스타일 */
+.secret-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* 사진 아래 한마디 */
+.secret-caption {
+    font-size: 11px;
+    color: #7a5f66;
+    margin-top: 6px;
+}
+/* ← → 버튼 */
+.slide-btn {
+    background: linear-gradient(90deg, #f8c8d8 0%, #f3b5c8 100%);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(243, 145, 175, 0.25);
+    transition: 0.2s ease;
+}
+
+.slide-btn:hover {
+    background: linear-gradient(90deg, #f3b5c8 0%, #eaa2bb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(243, 145, 175, 0.35);
+}
+
+/* 닫기 버튼 */
+.secret-close-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f8c8d8 0%, #f3b5c8 100%);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(243, 145, 175, 0.25);
+    transition: 0.2s ease;
+}
+
+.secret-close-btn:hover {
+    background: linear-gradient(90deg, #f3b5c8 0%, #eaa2bb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(243, 145, 175, 0.35);
+}
+
 </style>
 </head>
 
